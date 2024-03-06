@@ -2,23 +2,19 @@
 ## _Code for Benson et. al., CVPR (2024)_
 
 
-# TODO:
-- [x] Add SimVP
-- [ ] Merge Request EMP + version release
-- [x] Upload Model weights somewhere (e.g. Zenodo?) + Make download script that puts them in the folder `model_weights`
-- [x] Add timeseries Model code
-- [x] Put Markdown Table with Model + Weight for each Table / Figure in main text
-- [x] Dataset download info
-- [x] Add Dataset Generation Snippet
-- [x] Add Cloud Mask Training Script
-- [x] Add Model Eval Script
-- [ ] Add Script to aggregate Data for each Figure/Table
-- [ ] Add Installation guide
-- [ ] Add Citation
-- [ ] Update EarthNet website/documentation
-
-
 # Installation
+
+The easiest is to just create a conda environment as follows:
+
+```bash
+conda create -n greenearthnet python=3.10
+conda activate greenearthnet
+conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.6 -c pytorch -c nvidia
+conda install -c conda-forge u8darts-notorch
+conda install -c conda-forge numpy matplotlib pillow xarray zarr netcdf4 scipy imageio networkx scikit-image s3fs pyproj pyarrow seaborn cartopy tensorboard dask pytorch-lightning=1.7.7 torchmetrics=0.7.3 statsmodels
+pip install earthnet earthnet-minicuber segmentation-models-pytorch albumentations
+pip install git+https://github.com/earthnet2021/earthnet-models-pytorch.git@v0.1.0
+```
 
 # GreenEarthNet Dataset Download
 
@@ -187,3 +183,13 @@ If you wish to just use the trained Cloud Mask Algorithm, you may do so, it is i
 | Contextformer | `model_configs/contextformer/<contextformer6M,noweather>/seed=<42,97,27>.<yaml/ckpt>` |
 
 # Citation
+
+```bibtex
+@inproceedings{
+benson2024selfsupervised,
+title={Multi-modal learning for geospatial vegetation forecasting},
+author={Benson, Vitus and Robin, Claire and Requena-Mesa, Christian and Alonso, Lazaro and Carvalhais, Nuno and Cort{\'e}s, Jos{\'e} and Gao, Zhihan and Linscheid, Nora and Weynants, M{\'e}lanie and Reichstein, Markus},
+booktitle={Conference on Computer Vision and Pattern Recognition 2024},
+year={2024}
+}
+```
