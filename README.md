@@ -7,10 +7,11 @@
 - [ ] Merge Request EMP + version release
 - [x] Upload Model weights somewhere (e.g. Zenodo?) + Make download script that puts them in the folder `model_weights`
 - [x] Add timeseries Model code
-- [ ] Put Markdown Table with Model + Weight for each Table / Figure in main text
-- [ ] Add Dataset Generation Script
-- [ ] Add Cloud Mask Training Script
-- [ ] Add Model Eval Script
+- [x] Put Markdown Table with Model + Weight for each Table / Figure in main text
+- [x] Dataset download info
+- [x] Add Dataset Generation Snippet
+- [x] Add Cloud Mask Training Script
+- [x] Add Model Eval Script
 - [ ] Add Script to aggregate Data for each Figure/Table
 - [ ] Add Installation guide
 - [ ] Add Citation
@@ -21,11 +22,11 @@
 
 # GreenEarthNet Dataset Download
 
-Ensure you have enough free disk space! We recommend 1TB.
+We use the EarthNet Toolkit to download the GreenEarthNet dataset. First make sure you have it installed (`pip install earthnet`) and also make sure you have enough free disk space! We recommend 1TB. Then, downloading the dataset or a part thereof is as simple as:
 
-```
+```python
 import earthnet as entk
-entk.download(dataset = "earthnet2021x", split = "train", save_directory = "data_dir")
+entk.download(dataset = "greenearthnet", split = "train", save_directory = "data_dir")
 ```
 Where  `data_dir` is the directory where EarthNet2021 shall be saved and `split` is `"all"`or a subset of `["train","iid","ood","extreme","seasonal"]`.
 
@@ -38,6 +39,12 @@ For training and inference, we are using `earthnet-models-pytorch`, which means 
 ```bash
 python test.py model_configs/path/to/config.yaml weights/path/to/weights.ckpt --track ood-t_chopped --pred_dir preds/path/to/save/predictions --data_dir data/path/to/dataset
 ```
+
+You may also evaluate the model predictions and compute the metrics reported in the paper:
+```bash
+python eval.py path/to/test/dataset path/to/model/predictions path/for/saving/scores
+```
+You can optionally include a comparison directory, to also compute the outperformance score, e.g. relative to the Climatology baseline as done in the paper: `--compare_dir path/to/climatology/predictions`
 
 # Model Training
 
@@ -57,9 +64,60 @@ unzip model_weights.zip
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10790832.svg)](https://doi.org/10.5281/zenodo.10790832)
 
 
+# Dataset Generation
+
+The GreenEarthNet dataset has been generated with the EarthNet minicuber (`pip install earthnet-minicuber`). You can create more minicubes in the same style using the following code snippet:
+
+```python
+import earthnet_minicuber as emc
+
+specs = {
+    "lon_lat": (43.598946, 3.087414),  # center pixel
+    "xy_shape": (128, 128),  # width, height of cutout around center pixel
+    "resolution": 20,  # in meters.. will use this together with grid of primary provider..
+    "time_interval": "2018-01-01/2021-12-31",
+    "providers": [
+        {
+            "name": "s2",
+            "kwargs": {
+                "bands": ["B02", "B03", "B04", "B8A", "SCL"],  # , "B09", "B11", "B12"],
+                "best_orbit_filter": False,
+                "five_daily_filter": True,
+                "brdf_correction": False,
+                "cloud_mask": True,
+                "cloud_mask_rescale_factor": 2,
+                "aws_bucket": "planetary_computer",
+            },
+        },
+        {"name": "srtm", "kwargs": {"bands": ["dem"]}},
+        {"name": "alos", "kwargs": {}},
+        {"name": "cop", "kwargs": {}},
+        {
+            "name": "esawc",
+            "kwargs": {"bands": ["lc"], "aws_bucket": "planetary_computer"},
+        },
+        # {
+        #     "name": "geom",
+        #     "kwargs": {"filepath": "downloads/Geomorphons/geom/geom_90M_africa_europe.tif"}
+        # }
+        # Also Missing here: EOBS v26 https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles
+    ],
+}
+
+mc = emc.load_minicube(specs, compute = True)
+```
+
+To fully obtain minicubes aligned with the GreenEarthNet dataset that are useful for prediction, you still need to download and merge [E-OBS v26](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
+
 # Cloud Mask Training
 
-# Dataset Generation
+The Cloud Mask Algorithm is trained on the [CloudSEN12](https://cloudsen12.github.io/) dataset, if you want to repeat the training, follow the instructions on their website to download the dataset and then run the python script:
+```python
+python cloudmask/train_cloudmask_l2argbnir.py
+```
+> **_NOTE:_**  This python script is based upon the original [CloudSEN12 MobileNetv2 implementation](https://github.com/cloudsen12/models/blob/master/unet_mobilenetv2/cloudsen12_unet.py)!
+
+If you wish to just use the trained Cloud Mask Algorithm, you may do so, it is included in the [EarthNet Minicuber](https://github.com/earthnet2021/earthnet-minicuber) package (`pip install earthnet-minicuber`).
 
 # Reproducing Paper Tables
 
