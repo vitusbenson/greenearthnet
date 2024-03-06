@@ -1,0 +1,82 @@
+Architecture: "contextformer"
+
+Seed: 42
+
+Setting: greenearthnet
+
+Logger:
+    save_dir: "experiments/"
+
+Checkpointer:
+    save_top_k: 1
+    save_last: True
+    every_n_epochs: 1
+
+Trainer:
+    gpus: 2
+    strategy: 'ddp'
+    log_every_n_steps: 32
+    max_epochs: 100
+    gradient_clip_val: 1
+
+Data:
+    test_track: "ood-t_chopped"
+    train_batch_size: 16
+    val_batch_size: 8
+    test_batch_size: 8
+    num_workers: 32
+    dl_cloudmask: True
+    allow_fastaccess: False
+    new_valset: True
+
+Task:
+    loss:
+        name: "MaskedL2NDVILoss"
+        lc_min: 10
+        lc_max: 40
+        ndvi_pred_idx: 0
+        ndvi_targ_idx: 0
+        pred_mask_value: -1
+        scale_by_std: False
+    context_length: 10
+    target_length: 20
+    n_stochastic_preds: 1
+    optimization:
+        optimizer:
+            - 
+                name: AdamW
+                args: 
+                    betas: [0.9, 0.999]
+                lr_per_sample: 0.00000125
+        lr_shedule:
+            -
+                name: MultiStepLR
+                args:
+                    milestones: [190] #[2, 20, 50, 90]
+                    gamma: 0.1
+    n_log_batches: 2
+    compute_metric_on_test: True
+
+Model:
+    patch_size: 4
+    n_image: 8
+    n_weather: 24
+    n_hidden: 256
+    n_out: 1
+    n_heads: 8
+    depth: 3
+    mlp_ratio: 4.0
+    mtm: True
+    leave_n_first: 3
+    p_mtm: 0.7
+    p_use_mtm: 0.5
+    mask_clouds: True
+    predict_delta: False
+    predict_delta0: False
+    predict_delta_avg: False
+    predict_delta_max: True
+    add_last_ndvi: True
+    add_mean_ndvi: False
+    pvt: True
+    pvt_frozen: False
+    use_weather: False
