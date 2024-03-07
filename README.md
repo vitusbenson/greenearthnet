@@ -1,6 +1,7 @@
 # Multi-modal learning for geospatial vegetation forecasting
 ## _Code for Benson et. al., CVPR (2024)_
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10793870.svg)](https://doi.org/10.5281/zenodo.10793870)
 
 # Installation
 
@@ -50,14 +51,14 @@ python test.py model_configs/path/to/config.yaml --data_dir data/path/to/dataset
 
 # Downloading Pre-Trained Model Weights
 
-The pre-trained model weights are stored on [Zenodo](https://doi.org/10.5281/zenodo.10790832). You may download them (2.2GB) using this code:
+The pre-trained model weights are stored on [Zenodo](https://doi.org/10.5281/zenodo.10793870). You may download them (2.3GB) using this code:
 
 ```bash
-wget https://zenodo.org/records/10790832/files/model_weights.zip
+wget https://zenodo.org/records/10793870/files/model_weights.zip
 unzip model_weights.zip
 ```
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10790832.svg)](https://doi.org/10.5281/zenodo.10790832)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10793870.svg)](https://doi.org/10.5281/zenodo.10793870)
 
 
 # Dataset Generation
@@ -139,9 +140,9 @@ If you wish to just use the trained Cloud Mask Algorithm, you may do so, it is i
 | Model | Config/Weights |
 | --- | --- |
 | Climatology | |
-| 1x1 LSTM | `model_configs/lstm1x1/<lstm1x1,spatialshuffle>/seed=42.yaml` |
-| Next-frame UNet | `model_configs/nfunet/<nfunet,spatialshuffle>/seed=42.yaml` |
-| Next-cuboid UNet | `model_configs/nfunet/<nfunet,spatialshuffle>/seed=42.yaml` |
+| 1x1 LSTM | `model_configs/lstm1x1/<lstm1x1,spatialshuffle>/seed=42.<yaml/ckpt>` |
+| Next-frame UNet | `model_configs/nfunet/<nfunet,spatialshuffle>/seed=42.<yaml/ckpt>` |
+| Next-cuboid UNet | `model_configs/nfunet/<nfunet,spatialshuffle>/seed=42.<yaml/ckpt>` |
 | ConvLSTM | `model_configs/convlstm/<convlstm1M,spatialshuffle>/seed=42.<yaml/ckpt>` |
 | PredRNN | `model_configs/predrnn/<predrnn1M,spatialshuffle>/seed=42.<yaml/ckpt>` |
 | SimVP | `model_configs/simvp/<simvp6M,spatialshuffle>/seed=42.<yaml/ckpt>` |
