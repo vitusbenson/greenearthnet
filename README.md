@@ -1,7 +1,9 @@
 # Multi-modal learning for geospatial vegetation forecasting
 ## _Code for Benson et. al., CVPR (2024)_
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10793870.svg)](https://doi.org/10.5281/zenodo.10793870)
+[![arXiv](https://img.shields.io/badge/arXiv-2303.16198-b31b1b.svg)](https://arxiv.org/abs/2303.16198) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10793870.svg)](https://doi.org/10.5281/zenodo.10793870)
+
+:zap: Our paper on [_Multi-modal learning for geospatial vegetation forecasting_](https://arxiv.org/abs/2303.16198v2) has been accepted to CVPR! We benchmark a wide range of EarthNet models on the new GreenEarthNet dataset, plus introducing a new transformer-based SOTA: Contextformer.
 
 # Installation
 
