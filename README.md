@@ -48,7 +48,7 @@ You can optionally include a comparison directory, to also compute the outperfor
 # Model Training
 
 ```bash
-python test.py model_configs/path/to/config.yaml --data_dir data/path/to/dataset
+python train.py model_configs/path/to/config.yaml --data_dir data/path/to/dataset
 ```
 
 # Downloading Pre-Trained Model Weights
