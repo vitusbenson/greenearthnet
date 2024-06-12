@@ -3,7 +3,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2303.16198-b31b1b.svg)](https://arxiv.org/abs/2303.16198) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10793870.svg)](https://doi.org/10.5281/zenodo.10793870)
 
-:zap: Our paper on [_Multi-modal learning for geospatial vegetation forecasting_](https://arxiv.org/abs/2303.16198v2) has been accepted to CVPR! We benchmark a wide range of EarthNet models on the new GreenEarthNet dataset, plus introducing a new transformer-based SOTA: Contextformer.
+:zap: Our paper on [_Multi-modal learning for geospatial vegetation forecasting_]([https://arxiv.org/abs/2303.16198v2](https://openaccess.thecvf.com/content/CVPR2024/html/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.html)) has been accepted to CVPR! We benchmark a wide range of EarthNet models on the new GreenEarthNet dataset, plus introducing a new transformer-based SOTA: Contextformer.
 
 # Installation
 
@@ -188,11 +188,12 @@ If you wish to just use the trained Cloud Mask Algorithm, you may do so, it is i
 # Citation
 
 ```bibtex
-@inproceedings{
-benson2024selfsupervised,
-title={Multi-modal learning for geospatial vegetation forecasting},
-author={Benson, Vitus and Robin, Claire and Requena-Mesa, Christian and Alonso, Lazaro and Carvalhais, Nuno and Cort{\'e}s, Jos{\'e} and Gao, Zhihan and Linscheid, Nora and Weynants, M{\'e}lanie and Reichstein, Markus},
-booktitle={Conference on Computer Vision and Pattern Recognition 2024},
-year={2024}
+@InProceedings{Benson_2024_CVPR,
+    author    = {Benson, Vitus and Robin, Claire and Requena-Mesa, Christian and Alonso, Lazaro and Carvalhais, Nuno and Cort\'es, Jos\'e and Gao, Zhihan and Linscheid, Nora and Weynants, M\'elanie and Reichstein, Markus},
+    title     = {Multi-modal Learning for Geospatial Vegetation Forecasting},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2024},
+    pages     = {27788-27799}
 }
 ```
