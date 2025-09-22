@@ -25,7 +25,7 @@ def compute_metrics(targ, pred, name_ndvi_pred="ndvi_pred", subset_hq=True):
     mask = mask_full.sel(time=pred.time)
 
     targ_ndvi_full = (
-        ((nir - red) / (nir + red + 1e-8)).where(mask_full == 1, np.NaN).clip(-1, 1)
+        ((nir - red) / (nir + red + 1e-8)).where(mask_full == 1, np.nan).clip(-1, 1)
     )
     targ_ndvi = targ_ndvi_full.sel(time=pred.time)
     pred_ndvi = pred[name_ndvi_pred].clip(-1, 1).fillna(0.5)
@@ -50,9 +50,9 @@ def compute_metrics(targ, pred, name_ndvi_pred="ndvi_pred", subset_hq=True):
     metrics["n_obs"] = (mask == 1).sum("time")
 
     metrics["sigma_targ"] = targ_std
-    metrics["sigma_pred"] = pred_ndvi.where(mask == 1, np.NaN).std("time")
+    metrics["sigma_pred"] = pred_ndvi.where(mask == 1, np.nan).std("time")
 
-    metrics["bias"] = targ_ndvi.mean("time") - pred_ndvi.where(mask == 1, np.NaN).mean(
+    metrics["bias"] = targ_ndvi.mean("time") - pred_ndvi.where(mask == 1, np.nan).mean(
         "time"
     )
 
@@ -359,4 +359,9 @@ if __name__ == "__main__":
     )
 
     dataset = Path(args.score_dir).stem
-    summarize_scores(args.score_dir, compare_dir=Path(args.compare_dir) / f"{dataset}")
+    compare_dir_path = Path(args.compare_dir) / f"{dataset}"
+    if compare_dir_path.is_dir():
+        print(f"comparing to {compare_dir_path}")
+        summarize_scores(args.score_dir, compare_dir=compare_dir_path)
+    else:
+        summarize_scores(args.score_dir)

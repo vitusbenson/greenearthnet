@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Test Script
-"""
+"""Test Script"""
 from argparse import ArgumentParser
 
 import pytorch_lightning as pl
@@ -39,16 +38,17 @@ def test_model(setting_dict: dict, checkpoint: str):
     task_parser = ArgumentParser()
     task_parser = SpatioTemporalTask.add_task_specific_args(task_parser)
     task_params = task_parser.parse_args(task_args)
-    task = SpatioTemporalTask(model=model, hparams=task_params)
 
     if checkpoint != "None":
-        task.load_from_checkpoint(
+        task = SpatioTemporalTask.load_from_checkpoint(
             checkpoint_path=checkpoint,
             context_length=setting_dict["Task"]["context_length"],
             target_length=setting_dict["Task"]["target_length"],
             model=model,
             hparams=task_params,
         )
+    else:
+        task = SpatioTemporalTask(model=model, hparams=task_params)
 
     # Trainer
 
@@ -116,7 +116,9 @@ if __name__ == "__main__":
     if args.data_dir is not None:
         setting_dict["Data"]["base_dir"] = args.data_dir
 
+    setting_dict["Trainer"]["accelerator"] = "auto"
     if "gpus" in setting_dict["Trainer"]:
-        setting_dict["Trainer"]["gpus"] = args.gpus
+        setting_dict["Trainer"].pop("gpus")
+        setting_dict["Trainer"]["devices"] = args.gpus
 
     test_model(setting_dict, args.checkpoint)
