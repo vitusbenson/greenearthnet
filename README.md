@@ -23,7 +23,7 @@
 The easiest is to just create a conda environment as follows:
 
 ```bash
-conda create -n greenearthnet -c conda-forge python=3.12 
+conda create -n greenearthnet -c conda-forge python 
 conda activate greenearthnet
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
 pip install numpy matplotlib pillow xarray zarr netcdf4 scipy imageio networkx scikit-image s3fs pyproj pyarrow seaborn cartopy tensorboard dask pytorch-lightning torchmetrics statsmodels earthnet earthnet-minicuber segmentation-models-pytorch albumentations ipykernel
