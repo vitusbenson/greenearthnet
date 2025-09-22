@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Train Script
-"""
+"""Train Script"""
 
 import os
 import time
@@ -13,8 +12,6 @@ from earthnet_models_pytorch.model import MODELS
 from earthnet_models_pytorch.task import SpatioTemporalTask
 from earthnet_models_pytorch.utils import parse_setting
 from pytorch_lightning.callbacks import TQDMProgressBar
-from pytorch_lightning.plugins import DDPPlugin
-from pytorch_lightning.strategies import DDPStrategy
 
 
 def train_model(setting_dict: dict, setting_file: str = None):
@@ -67,6 +64,17 @@ def train_model(setting_dict: dict, setting_file: str = None):
 
     # Trainer
     trainer_dict = setting_dict["Trainer"]
+
+    # Add DDP strategy with find_unused_parameters=True
+    if "strategy" not in trainer_dict:
+        # If using distributed training, configure DDP strategy
+        if (
+            trainer_dict.get("accelerator") == "gpu"
+            and trainer_dict.get("devices", 1) > 1
+        ):
+            trainer_dict["strategy"] = pl.strategies.DDPStrategy(
+                find_unused_parameters=True
+            )
 
     trainer = pl.Trainer(
         logger=logger,

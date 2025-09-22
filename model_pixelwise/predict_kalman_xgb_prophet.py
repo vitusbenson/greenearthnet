@@ -44,7 +44,7 @@ def dataframe_from_minicube(mc):
     )
     sen2_data = (
         pixel[[f"s2_{b}" for b in ["ndvi", "B02", "B03", "B04", "B8A"]]]
-        .where(sen2_mask == 0, np.NaN)
+        .where(sen2_mask == 0, np.nan)
         .isel(time=slice(4, None, 5))
     )
 
@@ -188,7 +188,7 @@ def predict_minicube(data_dir, save_dir, mc_name, models=["lgbm", "prophet", "ka
 
         all_preds = {}
         for model in models:
-            all_preds[model] = np.full((H, W, len(out_time)), fill_value=np.NaN)
+            all_preds[model] = np.full((H, W, len(out_time)), fill_value=np.nan)
 
         for lat_idx in tqdm(range(H), desc="Lat", position=1, leave=False):
             for lon_idx in tqdm(range(W), desc="Lon", position=2, leave=False):

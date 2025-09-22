@@ -3,6 +3,19 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2303.16198-b31b1b.svg)](https://arxiv.org/abs/2303.16198) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10793870.svg)](https://doi.org/10.5281/zenodo.10793870)
 
+
+
+<a href="https://arxiv.org/abs/2303.16198" target="_blank">
+    <img src="https://img.shields.io/badge/arXiv-2303.16198-b31b1b.svg" alt="arXiv">
+</a>
+<a href="https://doi.org/10.5281/zenodo.10793870" target="_blank">
+    <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10793870.svg" alt="DOI">
+</a>
+<a href="https://earthnet.tech/resources/datasets" target="_blank">
+    <img src="https://img.shields.io/badge/Documentation-018EF5?logo=readme&logoColor=fff" alt="Documentation">
+</a>
+
+
 :zap: Our paper on [_Multi-modal learning for geospatial vegetation forecasting_](https://openaccess.thecvf.com/content/CVPR2024/html/Benson_Multi-modal_Learning_for_Geospatial_Vegetation_Forecasting_CVPR_2024_paper.html) has been accepted to CVPR! We benchmark a wide range of EarthNet models on the new GreenEarthNet dataset, plus introducing a new transformer-based SOTA: Contextformer.
 
 # Installation
@@ -10,14 +23,14 @@
 The easiest is to just create a conda environment as follows:
 
 ```bash
-conda create -n greenearthnet python=3.10
+conda create -n greenearthnet -c conda-forge python=3.12 
 conda activate greenearthnet
-conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.6 -c pytorch -c nvidia
-conda install -c conda-forge u8darts-notorch
-conda install -c conda-forge numpy matplotlib pillow xarray zarr netcdf4 scipy imageio networkx scikit-image s3fs pyproj pyarrow seaborn cartopy tensorboard dask pytorch-lightning=1.7.7 torchmetrics=0.7.3 statsmodels
-pip install earthnet earthnet-minicuber segmentation-models-pytorch albumentations
-pip install git+https://github.com/earthnet2021/earthnet-models-pytorch.git@v0.1.0
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+pip install numpy matplotlib pillow xarray zarr netcdf4 scipy imageio networkx scikit-image s3fs pyproj pyarrow seaborn cartopy tensorboard dask pytorch-lightning torchmetrics statsmodels earthnet earthnet-minicuber segmentation-models-pytorch albumentations ipykernel
+pip install git+https://github.com/earthnet2021/earthnet-models-pytorch.git@v0.1.1
 ```
+
+> Note: Running the pixelwise models (`model_pixelwise/predict_kalman_xgb_prophet.py`) in addition requires installing [`darts`](https://unit8co.github.io/darts/#quick-install), for this run `conda install -c conda-forge u8darts-notorch` and hope nothing breaks.
 
 # GreenEarthNet Dataset Download
 

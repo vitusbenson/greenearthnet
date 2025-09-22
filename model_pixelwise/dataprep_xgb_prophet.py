@@ -26,7 +26,7 @@ def dataframe_from_minicube_pixel(mc, lat_idx, lon_idx):
     )
     sen2_data = (
         pixel[[f"s2_{b}" for b in ["ndvi", "B02", "B03", "B04", "B8A"]]]
-        .where(sen2_mask == 0, np.NaN)
+        .where(sen2_mask == 0, np.nan)
         .isel(time=slice(4, None, 5))
     )
 

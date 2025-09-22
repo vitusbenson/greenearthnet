@@ -27,7 +27,7 @@ def predict_prevseason(minicube_path, targ):
         red = minicube.s2_B04
         minicube["s2_ndvi"] = ((nir - red) / (nir + red + 1e-8)).where(
             ((minicube.s2_dlmask < 1) & minicube.s2_SCL.isin([1, 2, 4, 5, 6, 7])),
-            np.NaN,
+            np.nan,
         )
 
         pred = (
@@ -67,7 +67,7 @@ def compute_metrics(targ, pred, name_ndvi_pred="ndvi_pred", subset_hq=True):
     mask = mask_full.sel(time=pred.time)
 
     targ_ndvi_full = (
-        ((nir - red) / (nir + red + 1e-8)).where(mask_full == 1, np.NaN).clip(-1, 1)
+        ((nir - red) / (nir + red + 1e-8)).where(mask_full == 1, np.nan).clip(-1, 1)
     )
     targ_ndvi = targ_ndvi_full.sel(time=pred.time)
     pred_ndvi = pred[name_ndvi_pred].clip(-1, 1)
@@ -92,9 +92,9 @@ def compute_metrics(targ, pred, name_ndvi_pred="ndvi_pred", subset_hq=True):
     metrics["n_obs"] = (mask == 1).sum("time")
 
     metrics["sigma_targ"] = targ_std
-    metrics["sigma_pred"] = pred_ndvi.where(mask == 1, np.NaN).std("time")
+    metrics["sigma_pred"] = pred_ndvi.where(mask == 1, np.nan).std("time")
 
-    metrics["bias"] = targ_ndvi.mean("time") - pred_ndvi.where(mask == 1, np.NaN).mean(
+    metrics["bias"] = targ_ndvi.mean("time") - pred_ndvi.where(mask == 1, np.nan).mean(
         "time"
     )
 
